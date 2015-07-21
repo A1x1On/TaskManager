@@ -67,3 +67,5 @@ ADD USID int REFERENCES USERS(ID) --1 новый столбец,  2 таблица(столбец для связ
 DELETE TASKS WHERE TASKID != 0;
 
 EXEC sp_rename 'TASKS.USERID', 'USID', 'COLUMN';
+
+---dsfdsfdsdsfdsf
