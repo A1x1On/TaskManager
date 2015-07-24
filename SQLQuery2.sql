@@ -48,12 +48,12 @@ CREATE TABLE TASKS
 	DISCRIPTION varchar(MAX)NOT NULL,
 )
 
-ALTER TABLE TASKS
+ALTER TABLE USERS
 ADD CONSTRAINT TASKID PRIMARY KEY (TASKID)
 
 exec sp_help 'TASKS'
+EXEC sp_sproc_columns 'TASKS.USID'
 exec sp_helpdb TaskManager;
-
 
 INSERT INTO TASKS (USERID, TITLE, TASKSTATUS, TASKTERM, TAGS, DISCRIPTION)
 VALUES
@@ -62,10 +62,17 @@ VALUES
 EXEC sp_rename 'TASKS.ID', 'TASKID', 'COLUMN';
 
 ALTER TABLE TASKS 
-ADD USID int REFERENCES USERS(ID) --1 новый столбец,  2 таблица(столбец для связи)
+ADD USID int REFERENCES USERS(USERID) --1 новый столбец,  2 таблица(столбец для связи)
 
 DELETE TASKS WHERE TASKID != 0;
 
-EXEC sp_rename 'TASKS.USERID', 'USID', 'COLUMN';
+EXEC sp_rename 'USERS.ID', 'USERID', 'COLUMN';
 
----dsfdsfdsdsfdsf
+ALTER TABLE TASKS drop column USID
+alter table TASKS 
+add OWNERID int NOT NULL
+DEFAULT '0'
+
+ALTER TABLE TASKS DROP COLUMN OWNERID
+
+
